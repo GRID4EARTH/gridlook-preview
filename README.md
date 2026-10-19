@@ -41,6 +41,8 @@ The source is not published as a branch. On top of upstream `main` at `6370a99`:
 | `9ce4099` `5d5f87e` `3f70e8b` | PR #8, ported: the codecs (registered in `src/lib/data/codecs.ts`, so also in the data workers), an end-to-end test through zarrita, `docs/codecs.md` (author jmdelouis) |
 | `b6c7069` `01b085f` | tests: a DGGS store without `healpix_nside`, and a 2-level DGGS pyramid |
 | `22bc0c1` `5ae2494` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` |
+| `f750fa9` | fix for #235's `sortedCells.lowerBound`: `(lo + hi) >> 1` wrapped past 2**31 cells (whole-orbit mosaic, levels 19-20) |
+| `f28c5f0` `21af6ff` | DGGS `compression: "compacted"` (zuniq) and `"ranges"` cell coordinates: decoded into runs of cells, so a level is loaded by view without one stored cell id per cell (needs #235) |
 
 Differences from PR #8: its own `numcodecs.delta` decoder is not needed (zarrita 0.7.5 ships one), and neither is its
 `healpix_nside` fallback (`main` already reads the DGGS `refinement_level`); `1b6999f` tests that instead.
