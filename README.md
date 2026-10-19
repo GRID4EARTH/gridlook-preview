@@ -32,6 +32,11 @@ A Kerchunk reference file (2-cell orbit mosaic, full-sphere layout; GRID4EARTH/o
 
 <https://grid4earth.eu/gridlook-preview/#reference+https://data.grid4earth.eu/test-orbit-mosaic/kerchunk/S2B_MSIL2A_20260812T104619_R051_O49269_fullsphere_C10974-C10975.json/measurements/reflectance::boundlow=0::boundhigh=0.3>
 
+Copernicus DEM GLO-30 over Europe, levels 18 (25 m) to 8, compacted cell ids; the colour range starts from level 8,
+so give it in the URL:
+
+<https://grid4earth.eu/gridlook-preview/#https://data.grid4earth.eu/auxiliary/copernicus-dem-glo-30/copernicus-glo-30-v0-europe-pyramid.zarr/dem::boundlow=500::boundhigh=4800::lat=45.8326::lon=6.8652::alt=60000>
+
 No JPEG XL compressed Sentinel-2 L2A store is public yet; once one is under
 `https://data.grid4earth.eu/converted/sentinel-2-l2a/`, it opens the same way.
 
@@ -48,6 +53,8 @@ The source is not published as a branch. On top of upstream `main` at `6370a99`:
 | `f750fa9` | fix of `sortedCells.lowerBound`: `(lo + hi) >> 1` wrapped past 2**31 cells (whole-orbit mosaic, levels 19-20) |
 | `dd6e18d` | Kerchunk reference files, opened as `reference+https://<file>.json[/<group>]` (branch `feat/kerchunk-reference` of tinaok/gridlook, on upstream `main`, for an upstream pull request) |
 | `b795778` `1b09e9d` | merge of that branch, and the multiscales levels for reference files |
+| `6de218d` | colour range of a multi-resolution dataset: the coarsest level's range widened to the level on screen (only widens per dataset, variable and slice), so fine levels no longer saturate; upstream as `espg/gridlook#29` (against #235's branch) |
+| `aa817a1` `778b875` | HEALPix levels whose `cell_ids` use the dggs `compression` `compacted` (zuniq ids) or `ranges`: loaded by view without one stored id per cell (same as `f28c5f0` `21af6ff` of branch `feat/dggs-compacted-cells`; upstream draft against #235's branch) |
 
 Differences from PR #8: its own `numcodecs.delta` decoder is not needed (zarrita 0.7.5 ships one), and neither is its
 `healpix_nside` fallback (`main` already reads the DGGS `refinement_level`); `1b6999f` tests that instead.
