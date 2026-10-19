@@ -48,6 +48,7 @@ The source is not published as a branch. On top of upstream `main` at `6370a99`:
 | `f750fa9` | fix of `sortedCells.lowerBound`: `(lo + hi) >> 1` wrapped past 2**31 cells (whole-orbit mosaic, levels 19-20) |
 | `dd6e18d` | Kerchunk reference files, opened as `reference+https://<file>.json[/<group>]` (branch `feat/kerchunk-reference` of tinaok/gridlook, on upstream `main`, for an upstream pull request) |
 | `b795778` `1b09e9d` | merge of that branch, and the multiscales levels for reference files |
+| `6de218d` | colour range of a multi-resolution dataset: the coarsest level's range widened to the level on screen (only widens per dataset, variable and slice), so fine levels no longer saturate; upstream as `espg/gridlook#29` (against #235's branch) |
 
 Differences from PR #8: its own `numcodecs.delta` decoder is not needed (zarrita 0.7.5 ships one), and neither is its
 `healpix_nside` fallback (`main` already reads the DGGS `refinement_level`); `1b6999f` tests that instead.
