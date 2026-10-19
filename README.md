@@ -28,6 +28,10 @@ The earlier preview of #235 alone, [grid4earth.eu/gridlook-pr235](https://grid4e
 Zoom in on Paris: with "Pick the level from the zoom" on (Variable card), the level switches from 13 to 20.
 For a map underneath, use "Add layer…" → "Maps and Masks" (OpenStreetMap, Simple, Satellite) and move it below the data grid.
 
+A Kerchunk reference file (2-cell orbit mosaic, full-sphere layout; GRID4EARTH/orbit-mosaic `docs/alternatives.md`):
+
+<https://grid4earth.eu/gridlook-preview/#reference+https://data.grid4earth.eu/test-orbit-mosaic/kerchunk/S2B_MSIL2A_20260812T104619_R051_O49269_fullsphere_C10974-C10975.json/measurements/reflectance::boundlow=0::boundhigh=0.3>
+
 No JPEG XL compressed Sentinel-2 L2A store is public yet; once one is under
 `https://data.grid4earth.eu/converted/sentinel-2-l2a/`, it opens the same way.
 
@@ -41,6 +45,9 @@ The source is not published as a branch. On top of upstream `main` at `6370a99`:
 | `9ce4099` `5d5f87e` `3f70e8b` | PR #8, ported: the codecs (registered in `src/lib/data/codecs.ts`, so also in the data workers), an end-to-end test through zarrita, `docs/codecs.md` (author jmdelouis) |
 | `b6c7069` `01b085f` | tests: a DGGS store without `healpix_nside`, and a 2-level DGGS pyramid |
 | `22bc0c1` `5ae2494` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` |
+| `f750fa9` | fix of `sortedCells.lowerBound`: `(lo + hi) >> 1` wrapped past 2**31 cells (whole-orbit mosaic, levels 19-20) |
+| `dd6e18d` | Kerchunk reference files, opened as `reference+https://<file>.json[/<group>]` (branch `feat/kerchunk-reference` of tinaok/gridlook, on upstream `main`, for an upstream pull request) |
+| `b795778` `1b09e9d` | merge of that branch, and the multiscales levels for reference files |
 
 Differences from PR #8: its own `numcodecs.delta` decoder is not needed (zarrita 0.7.5 ships one), and neither is its
 `healpix_nside` fallback (`main` already reads the DGGS `refinement_level`); `1b6999f` tests that instead.
