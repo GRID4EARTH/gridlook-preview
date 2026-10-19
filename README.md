@@ -43,6 +43,7 @@ The source is not published as a branch. On top of upstream `main` at `6370a99`:
 | `22bc0c1` `5ae2494` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` |
 | `f750fa9` | fix for #235's `sortedCells.lowerBound`: `(lo + hi) >> 1` wrapped past 2**31 cells (whole-orbit mosaic, levels 19-20) |
 | `f28c5f0` `21af6ff` | DGGS `compression: "compacted"` (zuniq) and `"ranges"` cell coordinates: decoded into runs of cells, so a level is loaded by view without one stored cell id per cell (needs #235) |
+| `6ce0f21` | colour range of a multi-resolution dataset: the coarsest level's range widened to the level on screen (only widens per dataset, variable and slice), so fine levels no longer saturate; upstream as `espg/gridlook#29` (against #235's branch) |
 
 Differences from PR #8: its own `numcodecs.delta` decoder is not needed (zarrita 0.7.5 ships one), and neither is its
 `healpix_nside` fallback (`main` already reads the DGGS `refinement_level`); `1b6999f` tests that instead.
