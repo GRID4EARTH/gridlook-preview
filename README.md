@@ -35,16 +35,16 @@ On upstream `main` `64eb9b0`, merged into `0e7c178` (three conflicts: `sourceInd
 
 | commit | what | upstream |
 |---|---|---|
-| `83ffcc9` | the shared colour range of the levels ("Keep one colour range across levels", on) starts from the coarsest level and only widens to the levels shown, so fine levels of means do not saturate | `espg/gridlook#29` (branch `fix/multires-colour-range`) |
-| `b56c33d` | multiscales layouts that list arrays (`"asset": "18/b02"`, written by healpix-convert since GRID4EARTH/healpix-convert#71) are read as one level per parent group | `espg/gridlook#30` (branch `feat/array-asset-layout-on-235`) |
-| `adac3fd` `b73dc7f` | HEALPix levels whose cell ids use the dggs `compression` `compacted` (zuniq) or `ranges`, loaded by view without one stored id per cell | `espg/gridlook#31` (branch `feat/dggs-compacted-cells-on-235`) |
-| `cca27dd` | dense HEALPix faces are meshed over their finite values only (they were drawn up to about 230 m off) | branch `fix/dense-healpix-data-rect`, for `main` |
-| `c927034` | a Zarr v2 `fill_value` of 0 marks missing data, as in xarray (Zarr v3 unchanged) | branch `fix/fill-value-zero`, for `main` |
-| `b26d9b7` | initial colour range from CF `actual_range`, else `valid_range` / `valid_min` + `valid_max` | branch `feat/default-range-from-attrs`, for `main` |
-| `b616a1a` `8e9ce0f` | RGB composite layer (three entries of one dimension as a true-colour image) | `d70-t/gridlook#252` (draft) |
-| `6b00f30` … `4ef95f7` | decoders of the healpix-compress Sentinel-2 codecs (JPEG XL through `jxl-oxide-wasm`, loaded only when a dataset uses them; author jmdelouis, from GRID4EARTH/gridlook#8) | branch `feat/hcc-codecs`, for `main` |
-| `5f76709` `c8bc51f` | find an xdggs `cell_ids` coordinate when no dggs coordinate is named (port of `af1ff86` onto `0e7c178`) | branch `fix/healpix-cell-ids`, for `main` |
-| `f1dcf16` `5333b6e` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` | — |
+| `fbc9e4d` | the shared colour range of the levels ("Keep one colour range across levels", on) starts from the coarsest level and only widens to the levels shown, so fine levels of means do not saturate | `espg/gridlook#29` (branch `fix/multires-colour-range`) |
+| `68dabda` `e19c399` | multiscales layouts that list arrays (`"asset": "18/b02"`, written by healpix-convert since GRID4EARTH/healpix-convert#71) are read as one level per parent group, also when the store is opened from its root | `espg/gridlook#30` (branch `feat/array-asset-layout-on-235`) |
+| `de6e5e2` `7f92e86` | HEALPix levels whose cell ids use the dggs `compression` `compacted` (zuniq) or `ranges`, loaded by view without one stored id per cell | `espg/gridlook#31` (branch `feat/dggs-compacted-cells-on-235`) |
+| `ab0981b` | dense HEALPix faces are meshed over their finite values only (they were drawn up to about 230 m off) | branch `fix/dense-healpix-data-rect`, for `main` |
+| `bbdfbc1` | a Zarr v2 `fill_value` of 0 marks missing data, as in xarray (Zarr v3 unchanged) | branch `fix/fill-value-zero`, for `main` |
+| `71832d9` | initial colour range from CF `actual_range`, else `valid_range` / `valid_min` + `valid_max` | branch `feat/default-range-from-attrs`, for `main` |
+| `976ea6e` `231a2d9` | RGB composite layer (three entries of one dimension as a true-colour image) | `d70-t/gridlook#252` (draft) |
+| `c1edf5d` … `975fd92` | decoders of the healpix-compress Sentinel-2 codecs (JPEG XL through `jxl-oxide-wasm`, loaded only when a dataset uses them; author jmdelouis, from GRID4EARTH/gridlook#8) | branch `feat/hcc-codecs`, for `main` |
+| `9433e74` `883e380` | find an xdggs `cell_ids` coordinate when no dggs coordinate is named (port of `af1ff86` onto `0e7c178`) | branch `fix/healpix-cell-ids`, for `main` |
+| `0098f63` `32592ed` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` | — |
 
 After the merge of `main`, 9 tests of `0e7c178` fail only because their mocks predate `main` (no page URL for the
 Jupyter `_xsrf` token in `GlobeView.test.ts`, no `HttpStorage` in one Icechunk test); everything else passes, with
