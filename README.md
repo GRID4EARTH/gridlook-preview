@@ -50,12 +50,21 @@ On upstream `main` `64eb9b0`, merged into `0e7c178` (three conflicts: `sourceInd
 | `d482d3a` `1ef5c9a` `896d69b` `4302ddd` | decoders of the healpix-compress Sentinel-2 codecs, now from the `zarrita-hcc` package at `v0.1.2` (JPEG XL loaded only when a dataset uses them; the in-tree copy from GRID4EARTH/gridlook#8 is reverted) | branch `feat/hcc-codecs-package`, for `main` |
 | `4842755` | quality selector for the automatic multiscales level (Auto / Fast / Standard / Sharp; `pxpercell` in the link overrides it); a coarser level is applied at once, a finer one after the camera rests 350 ms (was GRID4EARTH/gridlook-preview#13) | experiment, not proposed upstream; whole source of this build: branch `preview-source-2026-11-08` of tinaok/gridlook |
 | `2a499b0` | the coarsest level drawn under a multiscales level (the backdrop) stays out of where that level has cells, so missing values of the level show as no data instead of the coarse level's colour; the backdrop still fills blocks not loaded yet | branch `fix/backdrop-cover-mask` of tinaok/gridlook, on top of `4842755`; not proposed upstream yet |
+| `ba34d3c` | correct the cover to exact cell presence, cropped to the loaded cells' bounding box: unread blocks and sparse gaps keep the backdrop, while present NaN cells still hide it; shader sampling is bounded to the cropped rectangle | same branch and `preview-source-2026-11-08` of tinaok/gridlook |
 | `9433e74` `883e380` | find an xdggs `cell_ids` coordinate when no dggs coordinate is named (port of `af1ff86` onto `0e7c178`) | branch `fix/healpix-cell-ids`, for `main` |
 | `0098f63` `32592ed` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` | — |
 
 After the merge of `main`, 9 tests of `0e7c178` fail only because their mocks predate `main` (no page URL for the
 Jupyter `_xsrf` token in `GlobeView.test.ts`, no `HttpStorage` in one Icechunk test); everything else passes, with
 `vue-tsc`, `eslint --max-warnings 0` and `prettier`.
+
+For `ba34d3c`, the two backdrop regressions fail before the fix and pass after it.
+The related helper/component tests pass 21/21, including level-20 unread blocks,
+sparse gaps, NaN cell presence and cropped-mask uniforms. The full suite passes
+612 tests with the same 9 failures as source parent `2a499b0` (606 passing there).
+Typecheck, lint, knip and the production build pass. These are CPU-side tests of
+the mask and material bindings; browser/WebGL rendering of this revision has not
+been checked.
 
 ## Dataset list and default dataset
 
