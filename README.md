@@ -8,7 +8,7 @@ not deployed together anywhere else yet:
   by espg) at its head `0e7c178` (branch `upstream/levels-lod` of espg/gridlook, 2026-10-23), with that `main` merged in;
 - our fixes, each on its own branch of tinaok/gridlook (table below), opened or to be opened upstream.
 
-Rebuilt on 2026-11-05 with `npm run build`. Source maps are left out. Gridlook is MIT-licensed (see the upstream
+Rebuilt on 2026-11-08 with `npm run build`. Source maps are left out. Gridlook is MIT-licensed (see the upstream
 repository).
 
 It is published so that GRID4EARTH can try its multi-resolution HEALPix products, including the JPEG XL compressed
@@ -46,7 +46,8 @@ On upstream `main` `64eb9b0`, merged into `0e7c178` (three conflicts: `sourceInd
 | `976ea6e` `231a2d9` `4be622a` | RGB composite layer (three entries of one dimension as a true-colour image); only band-like dimensions are offered (not time, 3 to 32 entries) | `d70-t/gridlook#252` (draft) |
 | `c529bcf` `b3d6fc6` | RGB composite from three variables of the current variable's group (Source: Three variables, e.g. b04/b03/b02 without a quicklook); on a pyramid, the variables of the level shown | branch `feat/rgb-three-variables-preview` of tinaok/gridlook (`feat/rgb-three-variables` for `main`), not proposed upstream (see `d70-t/gridlook#255`) |
 | `2a1f5f4` | the RGB layer reads only the blocks in view on large levels (it read whole faces and failed), and reloads with the level | same branch |
-| `d482d3a` `1ef5c9a` `896d69b` | decoders of the healpix-compress Sentinel-2 codecs, now from the `zarrita-hcc` package at `v0.1.1` (JPEG XL loaded only when a dataset uses them; the in-tree copy from GRID4EARTH/gridlook#8 is reverted) | branch `feat/hcc-codecs-package`, for `main` |
+| `d482d3a` `1ef5c9a` `896d69b` `4302ddd` | decoders of the healpix-compress Sentinel-2 codecs, now from the `zarrita-hcc` package at `v0.1.2` (JPEG XL loaded only when a dataset uses them; the in-tree copy from GRID4EARTH/gridlook#8 is reverted) | branch `feat/hcc-codecs-package`, for `main` |
+| `4842755` | quality selector for the automatic multiscales level (Auto / Fast / Standard / Sharp; `pxpercell` in the link overrides it); a coarser level is applied at once, a finer one after the camera rests 350 ms (was GRID4EARTH/gridlook-preview#13) | experiment, not proposed upstream; whole source of this build: branch `preview-source-2026-11-08` of tinaok/gridlook |
 | `9433e74` `883e380` | find an xdggs `cell_ids` coordinate when no dggs coordinate is named (port of `af1ff86` onto `0e7c178`) | branch `fix/healpix-cell-ids`, for `main` |
 | `0098f63` `32592ed` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` | — |
 
