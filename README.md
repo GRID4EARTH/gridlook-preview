@@ -8,7 +8,7 @@ not deployed together anywhere else yet:
   by espg) at its head `0e7c178` (branch `upstream/levels-lod` of espg/gridlook, 2026-10-23), with that `main` merged in;
 - our fixes, each on its own branch of tinaok/gridlook (table below), opened or to be opened upstream.
 
-Rebuilt on 2026-11-08 with `npm run build`. Source maps are left out. Gridlook is MIT-licensed (see the upstream
+Rebuilt on 2026-11-13 with `npm run build`. Source maps are left out. Gridlook is MIT-licensed (see the upstream
 repository).
 
 It is published so that GRID4EARTH can try its multi-resolution HEALPix products, including the JPEG XL compressed
@@ -28,6 +28,7 @@ Discussion: [GRID4EARTH/project-guidelines#21](https://github.com/GRID4EARTH/pro
 | RGB composite on a full-sphere pyramid (levels 20 to 12, read by view), Plouzané 2018-09-17: zoom in | <https://grid4earth.eu/gridlook-preview/#https://data.grid4earth.eu/test-orbit-mosaic/plouzane_timeseries/rgb_fullsphere.icechunk::dimIndices_time=155::layers=rgb,1,1,band,0,1,2,0,0.3;coastlines;grid::lon=-4.615::lat=48.385::alt=20000> |
 | RGB composite from three variables (b04, b03, b02) of a Sentinel-2 L2A cell, hcc codec | <https://grid4earth.eu/gridlook-preview/#https://data.grid4earth.eu/test-integ-20261030/converted-healpix-tiled/sentinel-2-l2a-multires/mean-l20-l12-hcc/S2C_MSIL2A_20260813T110621_R137_O10117/S2C_MSIL2A_20260813T110621_R137_O10117_L7_C54537.zarr/measurements/reflectance::varname=b04::layers=rgb,1,1,@vars,b04,b03,b02,0,0.3;coastlines;grid> |
 | Sentinel-2 L1C mosaic (Icechunk), 2026-08-12, relative orbit 94, Paris: true-colour RGB from three variables (b04, b03, b02) at level 18 | <https://grid4earth.eu/gridlook-preview/#icechunk+https://data.grid4earth.eu/converted-mosaic/sentinel-2-l1c/mean-l20-l12-c11-s9-hcc/l7/S2A_MSIL1C_20260812T105651_R094_O58178_N45-N53.icechunk::varname=measurements/reflectance/18/b02::lat=48.8546::lon=2.3461::alt=72096::layers=rgb,1,1,@vars,b04,b03,b02,0,0.25,1.3;coastlines;grid,0::levelauto=false::px=0::py=0> |
+| Same view with only `layers=rgb`: the defaults draw true colour (b04, b03, b02, range 0 to 0.25, gamma 1.3) | <https://grid4earth.eu/gridlook-preview/#icechunk+https://data.grid4earth.eu/converted-mosaic/sentinel-2-l1c/mean-l20-l12-c11-s9-hcc/l7/S2A_MSIL1C_20260812T105651_R094_O58178_N45-N53.icechunk::varname=measurements/reflectance/18/b02::lat=48.8546::lon=2.3461::alt=72096::layers=rgb::levelauto=false::px=0::py=0> |
 
 Since `0e7c178` the level is part of the variable name in links (`varname=19/b05`). A link from before, with a bare
 name that the first (finest) level does not hold (`varname=b05` on this cell), does not open; give the level.
@@ -49,9 +50,10 @@ On upstream `main` `64eb9b0`, merged into `0e7c178` (three conflicts: `sourceInd
 | `c529bcf` `b3d6fc6` | RGB composite from three variables of the current variable's group (Source: Three variables, e.g. b04/b03/b02 without a quicklook); on a pyramid, the variables of the level shown | branch `feat/rgb-three-variables-preview` of tinaok/gridlook (`feat/rgb-three-variables` for `main`), not proposed upstream (see `d70-t/gridlook#255`) |
 | `2a1f5f4` | the RGB layer reads only the blocks in view on large levels (it read whole faces and failed), and reloads with the level | same branch |
 | `d482d3a` `1ef5c9a` `896d69b` `4302ddd` | decoders of the healpix-compress Sentinel-2 codecs, now from the `zarrita-hcc` package at `v0.1.2` (JPEG XL loaded only when a dataset uses them; the in-tree copy from GRID4EARTH/gridlook#8 is reverted) | branch `feat/hcc-codecs-package`, for `main` |
-| `4842755` | quality selector for the automatic multiscales level (Auto / Fast / Standard / Sharp; `pxpercell` in the link overrides it); a coarser level is applied at once, a finer one after the camera rests 350 ms (was GRID4EARTH/gridlook-preview#13) | experiment, not proposed upstream; whole source of this build: branch `preview-source-2026-11-08` of tinaok/gridlook |
+| `4842755` | quality selector for the automatic multiscales level (Auto / Fast / Standard / Sharp; `pxpercell` in the link overrides it); a coarser level is applied at once, a finer one after the camera rests 350 ms (was GRID4EARTH/gridlook-preview#13) | experiment, not proposed upstream; whole source of this build: branch `preview-source-2026-11-13` of tinaok/gridlook |
 | `2a499b0` | the coarsest level drawn under a multiscales level (the backdrop) stays out of where that level has cells, so missing values of the level show as no data instead of the coarse level's colour; the backdrop still fills blocks not loaded yet | branch `fix/backdrop-cover-mask` of tinaok/gridlook, on top of `4842755`; not proposed upstream yet |
-| `ba34d3c` | correct the cover to exact cell presence, cropped to the loaded cells' bounding box: unread blocks and sparse gaps keep the backdrop, while present NaN cells still hide it; shader sampling is bounded to the cropped rectangle | same branch and `preview-source-2026-11-08` of tinaok/gridlook |
+| `ba34d3c` | correct the cover to exact cell presence, cropped to the loaded cells' bounding box: unread blocks and sparse gaps keep the backdrop, while present NaN cells still hide it; shader sampling is bounded to the cropped rectangle | same branch of tinaok/gridlook (and `preview-source-2026-11-08`) |
+| `ca38b04` | RGB composite defaults: a layer on One dimension with no band-like dimension but with b04/b03/b02 (or red/green/blue) next to it is drawn from them; for those variables the default range is 0 to 0.25 (not the data range); default gamma 1.3 for every RGB composite. Links that set a range or gamma are unchanged | `preview-source-2026-11-13` of tinaok/gridlook, on top of `ba34d3c`; not proposed upstream |
 | `9433e74` `883e380` | find an xdggs `cell_ids` coordinate when no dggs coordinate is named (port of `af1ff86` onto `0e7c178`) | branch `fix/healpix-cell-ids`, for `main` |
 | `0098f63` `32592ed` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` | — |
 
@@ -63,6 +65,7 @@ For `ba34d3c`, the two backdrop regressions fail before the fix and pass after i
 The related helper/component tests pass 21/21, including level-20 unread blocks,
 sparse gaps, NaN cell presence and cropped-mask uniforms. The full suite passes
 612 tests with the same 9 failures as source parent `2a499b0` (606 passing there).
+For `ca38b04`, 618 tests pass with the same 9 failures; the Paris link above was checked in a browser on a local build of this source.
 Typecheck, lint, knip and the production build pass. These are CPU-side tests of
 the mask and material bindings; browser/WebGL rendering of this revision has not
 been checked.
