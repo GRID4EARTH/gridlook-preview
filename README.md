@@ -8,7 +8,7 @@ not deployed together anywhere else yet:
   by espg) at its head `0e7c178` (branch `upstream/levels-lod` of espg/gridlook, 2026-10-23), with that `main` merged in;
 - our fixes, each on its own branch of tinaok/gridlook (table below), opened or to be opened upstream.
 
-Rebuilt on 2026-11-13 with `npm run build`. Source maps are left out. Gridlook is MIT-licensed (see the upstream
+Rebuilt on 2026-11-27 with `npm run build`. Source maps are left out. Gridlook is MIT-licensed (see the upstream
 repository).
 
 It is published so that GRID4EARTH can try its multi-resolution HEALPix products, including the JPEG XL compressed
@@ -54,6 +54,7 @@ On upstream `main` `64eb9b0`, merged into `0e7c178` (three conflicts: `sourceInd
 | `2a499b0` | the coarsest level drawn under a multiscales level (the backdrop) stays out of where that level has cells, so missing values of the level show as no data instead of the coarse level's colour; the backdrop still fills blocks not loaded yet | branch `fix/backdrop-cover-mask` of tinaok/gridlook, on top of `4842755`; not proposed upstream yet |
 | `ba34d3c` | correct the cover to exact cell presence, cropped to the loaded cells' bounding box: unread blocks and sparse gaps keep the backdrop, while present NaN cells still hide it; shader sampling is bounded to the cropped rectangle | same branch of tinaok/gridlook (and `preview-source-2026-11-08`) |
 | `ca38b04` | RGB composite defaults: a layer on One dimension with no band-like dimension but with b04/b03/b02 (or red/green/blue) next to it is drawn from them; for those variables the default range is 0 to 0.25 (not the data range); default gamma 1.3 for every RGB composite. Links that set a range or gamma are unchanged | `preview-source-2026-11-13` of tinaok/gridlook, on top of `ba34d3c`; not proposed upstream |
+| `2c27694` `e9977c7` `9e21cd3` | HEALPix cells of mixed levels: a dggs `refinement_level` of `null` with `zuniq` (or `nuniq`) cell ids, each cell drawn at the level in its id (ids kept as `BigUint64Array`), hover by cell id, histogram weighted by cell area; neighbouring patches overlap by 0.1 % so no gap shows between them | on top of `ca38b04`; not proposed upstream yet |
 | `9433e74` `883e380` | find an xdggs `cell_ids` coordinate when no dggs coordinate is named (port of `af1ff86` onto `0e7c178`) | branch `fix/healpix-cell-ids`, for `main` |
 | `0098f63` `32592ed` | GRID4EARTH only: ERA5 2 m temperature by default, dataset list from `https://data.grid4earth.eu/gridlook-catalog.json` | — |
 
